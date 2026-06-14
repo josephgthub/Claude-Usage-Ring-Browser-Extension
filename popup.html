@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 280px;
+    background: #0e0e10;
+    color: #e0e0e0;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 20px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+  }
+
+  .title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: #888;
+    text-transform: uppercase;
+  }
+
+  .reload-btn {
+    background: none;
+    border: 1px solid #2a2a2e;
+    color: #666;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    transition: all 0.2s;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 24px;
+  }
+  .reload-btn:hover { border-color: #555; color: #ccc; }
+  .reload-btn.spinning svg { animation: spin 0.7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .block {
+    margin-bottom: 18px;
+  }
+
+  .block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+
+  .label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: #555;
+    text-transform: uppercase;
+  }
+
+  .pct {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ccc;
+  }
+
+  .track {
+    height: 6px;
+    background: #1e1e22;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bar {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease, background-color 0.3s;
+  }
+
+  .sub {
+    margin-top: 5px;
+    font-size: 10px;
+    color: #444;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid #1a1a1e;
+    margin: 18px 0;
+  }
+
+  .error {
+    font-size: 11px;
+    color: #e05c5c;
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .footer {
+    font-size: 9px;
+    color: #333;
+    text-align: right;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="title">Claude Usage</span>
+  <button class="reload-btn" id="reload">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 18.5 5.4 L 14 6 M 21 12 a 9 9 0 0 1 -9 9 a 9 9 0 0 1 -9 -9 a 9 9 0 0 1 9 -9 c 2.5 0 4.8 0.9 6.5 2.4 L 17 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<div id="content">
+  <div class="block">
+    <div class="block-header">
+      <span class="label">Session (5h)</span>
+      <span class="pct" id="s-pct">—</span>
+    </div>
+    <div class="track"><div class="bar" id="s-bar" style="width:0%"></div></div>
+    <div class="sub" id="s-reset"></div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="block">
+    <div class="block-header">
+      <span class="label">Weekly (7d)</span>
+      <span class="pct" id="w-pct">—</span>
+    </div>
+    <div class="track"><div class="bar" id="w-bar" style="width:0%"></div></div>
+    <div class="sub" id="w-reset"></div>
+  </div>
+</div>
+
+<div id="error" class="error" style="display:none"></div>
+<div class="footer" id="footer"></div>
+
+<script src="popup.js"></script>
+</body>
+</html>
